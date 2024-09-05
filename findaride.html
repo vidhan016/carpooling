@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Ride</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #0288d1;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #0277bd;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #0288d1;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input, select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0288d1;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0277bd;
+        }
+        .ride-results ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .ride-results li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Find a Ride</h1>
+    </header>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="findride.html">Find a Ride</a>
+        <a href="postride.html">Post a Ride</a>
+        <a href="#">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h2>Search for Available Rides</h2>
+        <form id="rideSearchForm">
+            <label for="startLocation">Starting Point:</label>
+            <input type="text" id="startLocation" name="startLocation" placeholder="Enter your starting location" required>
+
+            <label for="destinationLocation">Destination:</label>
+            <input type="text" id="destinationLocation" name="destinationLocation" placeholder="Enter your destination" required>
+
+            <label for="rideDate">Date of Ride:</label>
+            <input type="date" id="rideDate" name="rideDate" required>
+
+            <button type="submit">Find a Ride</button>
+        </form>
+
+        <!-- Ride Results -->
+        <div class="ride-results">
+            <h2>Available Rides</h2>
+            <ul id="rideList">
+                <!-- Example of a ride result, these will be dynamically filled -->
+                <!-- <li><strong>Ride to [Destination]:</strong> [Date] | Driver: [Name] | Status: Available</li> -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Example of basic script to handle form submission and show some dummy rides
+        const form = document.getElementById('rideSearchForm');
+        const rideList = document.getElementById('rideList');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const startLocation = document.getElementById('startLocation').value;
+            const destinationLocation = document.getElementById('destinationLocation').value;
+            const rideDate = document.getElementById('rideDate').value;
+
+            // Clear previous results
+            rideList.innerHTML = '';
+
+            // Dummy ride data
+            const rides = [
+                { destination: "City Center", date: "2024-09-06", driver: "John Doe" },
+                { destination: "Airport", date: "2024-09-06", driver: "Jane Smith" },
+                { destination: "Downtown", date: "2024-09-07", driver: "Bill Gates" }
+            ];
+
+            // Filter and display rides (you'd replace this with real data from your backend)
+            const filteredRides = rides.filter(ride => ride.date === rideDate);
+
+            filteredRides.forEach(ride => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>Ride to ${ride.destination}:</strong> ${ride.date} | Driver: ${ride.driver} | Status: Available`;
+                rideList.appendChild(listItem);
+            });
+
+            // If no rides available
+            if (filteredRides.length === 0) {
+                const noRideItem = document.createElement('li');
+                noRideItem.textContent = "No rides available for the selected date.";
+                rideList.appendChild(noRideItem);
+            }
+        });
+    </script>
+
+</body>
+</html>
